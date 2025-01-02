@@ -27,6 +27,10 @@ job_type = st.selectbox("Job Type", [
     "Formally employed Private", "Informally employed", "Remittance Dependent",
     "Government Dependent", "Other Income", "No Income", "Dont Know/Refuse to answer"
 ])
+relationship_with_head = st.selectbox("Relationship with Head", [
+    "Head of Household", "Spouse", "Child", "Parent", "Other relative",
+    "Other non-relative"
+])
 
 # Button to predict
 if st.button("Predict"):
