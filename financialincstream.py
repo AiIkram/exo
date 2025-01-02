@@ -33,6 +33,7 @@ import joblib
 
 
 # Drop unnecessary columns
+X = df.drop(columns=['uniqueid', 'year'], errors='ignore')
 
 # Encode categorical features
 categorical_columns = [
@@ -55,9 +56,6 @@ df[target_column] = le.fit_transform(df[target_column])
 X = df.drop(columns=[target_column])
 y = df[target_column]
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 # Preprocessing for categorical features
 preprocessor = ColumnTransformer(
     transformers=[
@@ -65,6 +63,12 @@ preprocessor = ColumnTransformer(
     ],
     remainder="passthrough",  # Pass through numerical columns
 )
+
+print(X.dtypes)
+print(X.head())
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Define the Random Forest model
 rf = RandomForestClassifier(random_state=42)
