@@ -2,4 +2,3 @@ joblib
 streamlit
 scikit-learn
 pandas
-procps
