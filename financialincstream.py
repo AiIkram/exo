@@ -17,6 +17,9 @@ cellphone_access = st.selectbox("Cellphone Access", ["Yes", "No"])
 household_size = st.number_input("Household Size", min_value=1, max_value=30, step=1)
 age_of_respondent = st.number_input("Age of Respondent", min_value=16, max_value=100, step=1)
 gender_of_respondent = st.selectbox("Gender", ["Male", "Female"])
+relationship_with_head = st.selectbox("Relationship with Head", [
+    "Head of Household", "Spouse", "Child", "Parent", "Other relative", "Other non-relative"
+])
 marital_status = st.selectbox("Marital Status", ["Married/Living together", "Divorced/Separated", "Widowed", "Single/Never Married"])
 education_level = st.selectbox("Education Level", [
     "No formal education", "Primary education", "Secondary education",
@@ -26,10 +29,6 @@ job_type = st.selectbox("Job Type", [
     "Farming and Fishing", "Self employed", "Formally employed Government",
     "Formally employed Private", "Informally employed", "Remittance Dependent",
     "Government Dependent", "Other Income", "No Income", "Dont Know/Refuse to answer"
-])
-relationship_with_head = st.selectbox("Relationship with Head", [
-    "Head of Household", "Spouse", "Child", "Parent", "Other relative",
-    "Other non-relative"
 ])
 
 # Button to predict
@@ -42,6 +41,7 @@ if st.button("Predict"):
         "household_size": [household_size],
         "age_of_respondent": [age_of_respondent],
         "gender_of_respondent": [gender_of_respondent],
+        "relationship_with_head": [relationship_with_head],
         "marital_status": [marital_status],
         "education_level": [education_level],
         "job_type": [job_type],
