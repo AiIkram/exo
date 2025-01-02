@@ -33,12 +33,12 @@ import joblib
 
 
 # Drop unnecessary columns
-X = df.drop(columns=['uniqueid', 'year'], errors='ignore')
+X = df.drop(columns=['year'], errors='ignore')
 
 # Encode categorical features
 categorical_columns = [
     "country",
-    "location_type", # Removed 'bank_account' from this list
+    "location_type", 
     "cellphone_access",
     "gender_of_respondent",
     "relationship_with_head",
@@ -46,45 +46,50 @@ categorical_columns = [
     "education_level",
     "job_type",
 ]
-target_column = "bank_account"  # Assuming this is the target variable
+target_column = "bank_account"  
 
 # Encoding the target variable
 le = LabelEncoder()
 df[target_column] = le.fit_transform(df[target_column])
 
 # Define feature matrix (X) and target vector (y)
-X = df.drop(columns=[target_column])
 y = df[target_column]
 
-# Preprocessing for categorical features
+# Drop unnecessary columns
+X = df.drop(columns=["uniqueid", target_column], errors="ignore")
+
+# Define categorical columns
+categorical_columns = [
+    "country", "location_type", "cellphone_access", "gender_of_respondent",
+    "relationship_with_head", "marital_status", "education_level", "job_type"
+]
+
+# Preprocessing
 preprocessor = ColumnTransformer(
     transformers=[
         ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_columns),
     ],
-    remainder="passthrough",  # Pass through numerical columns
+    remainder="passthrough"  # Pass numerical columns as-is
 )
 
-print(X.dtypes)
-print(X.head())
+# Define the pipeline
+pipeline = Pipeline(steps=[
+    ("preprocessor", preprocessor),
+    ("classifier", RandomForestClassifier(random_state=42))
+])
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Define the Random Forest model
-rf = RandomForestClassifier(random_state=42)
-
-# Set up a pipeline
-pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", rf)])
-
-# Set up GridSearchCV parameters
+# Define GridSearchCV parameters
 param_grid = {
     "classifier__n_estimators": [100, 200, 300],
     "classifier__max_depth": [10, 20, None],
     "classifier__min_samples_split": [2, 5, 10],
 }
 grid_search = GridSearchCV(
-    pipeline, param_grid, cv=3, scoring="accuracy", verbose=3, n_jobs=1
+    pipeline, param_grid, cv=3, scoring="accuracy", verbose=3, n_jobs=1, error_score='raise'
 )
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Fit the model
 grid_search.fit(X_train, y_train)
@@ -95,7 +100,7 @@ print("Best Parameters:", grid_search.best_params_)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred))
 
-# Save the model for Streamlit
+# Save the best model
 joblib.dump(grid_search.best_estimator_, "rf_model.pkl")
 print("Model saved as rf_model.pkl")
 
