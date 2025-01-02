@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1iC_a2VZ4GhOhPXJ8A1zboZuQ7vOp1oQj
 """
 
-from google.colab import drive
-drive.mount('/content/drive')
 
 import pandas as pd
 df=pd.read_csv('/Financial_inclusion_dataset.csv')
