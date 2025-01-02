@@ -79,7 +79,7 @@ param_grid = {
     "classifier__min_samples_split": [2, 5, 10],
 }
 grid_search = GridSearchCV(
-    pipeline, param_grid, cv=3, scoring="accuracy", verbose=3, n_jobs=-1
+    pipeline, param_grid, cv=3, scoring="accuracy", verbose=3, n_jobs=1
 )
 
 # Fit the model
