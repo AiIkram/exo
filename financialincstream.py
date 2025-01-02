@@ -9,7 +9,7 @@ Original file is located at
 
 
 import pandas as pd
-df=pd.read_csv('exo/Financial_inclusion_dataset.csv')
+df=pd.read_csv('/workspaces/exo/Financial_inclusion_dataset.csv')
 df.head()
 
 print(df.describe())
