@@ -47,6 +47,8 @@ if st.button("Predict"):
         "job_type": [job_type],
     })
 
-    # Make predictions
+    # Make predictions using the same pipeline as in training
     prediction = model.predict(input_data)
+    
+    # Display result
     st.write("Prediction:", "Yes" if prediction[0] == 1 else "No")
