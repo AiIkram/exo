@@ -46,7 +46,7 @@ if st.button("Predict"):
         "education_level": [education_level],
         "job_type": [job_type],
     })
-
+    input_data = input_data.drop(columns=['year'], errors='ignore')
     # Make predictions using the same pipeline as in training
     prediction = model.predict(input_data)
     
