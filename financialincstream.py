@@ -11,7 +11,7 @@ from google.colab import drive
 drive.mount('/content/drive')
 
 import pandas as pd
-df=pd.read_csv('/content/drive/MyDrive/Financial_inclusion_dataset.csv')
+df=pd.read_csv('/Financial_inclusion_dataset.csv')
 df.head()
 
 print(df.describe())
