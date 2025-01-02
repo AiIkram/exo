@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load the trained model
-model = joblib.load("rf_model.pkl")
+model = joblib.load("/rf_model.pkl")
 
 # Title of the Streamlit App
 st.title("Bank Account Prediction App")
